@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"  
+      > 
+
+<h:head></h:head> 
+<body> 
+
+	<h3>parc oc</h3>
+	
+	
+	<h:form id="form">
+    <p:growl id="msgs" showDetail="true" />
+	<p:dataTable var="oc" 
+            value="#{OrganisationOc.parcOc}" 
+            rows="10"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15"
+            >
+            
+     		<!-- les données de la table -->
+	        <p:column headerText="Id" >
+	            <h:outputText value="#{oc.id}" />
+	        </p:column>
+	        <p:column headerText="Nom" >
+	            <h:outputText value="#{oc.nom}" />
+	        </p:column>
+	        <p:column headerText="Domaine d'activité" >
+	            <h:outputText value="#{oc.domaineAct}" />
+	        </p:column>
+	       <p:column style="width:32px;text-align: center">
+                <p:commandButton 
+                        update=":form:ocDetail" 
+                        oncomplete="PF('ocDialog').show()" 
+                        icon="ui-icon-search" title="View">
+                <f:setPropertyActionListener value="#{oc}" target="#{OrganisationOc.ocSelected}" />
+            </p:commandButton>
+        </p:column>
+    </p:dataTable>
+
+    <p:dialog header="Détail OC" widgetVar="ocDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+        <p:outputPanel id="ocDetail" style="text-align:center;">
+            <p:panelGrid  columns="2" rendered="#{not empty OrganisationOc.ocSelected}" columnClasses="label,value">
+                <f:facet name="header">
+                    <!--<p:graphicImage name="demo/images/car/#{dtSelectionView.selectedCar.brand}-big.gif"/> -->
+                </f:facet>
+ 
+                <h:outputText value="Id :" />
+                <h:outputText value="#{OrganisationOc.ocSelected.id}" />
+ 
+                <h:outputText value="Nom :" />
+                <h:outputText value="#{OrganisationOc.ocSelected.nom}" />
+ 
+                <h:outputText value="Domaine d'activité :" />
+                <h:outputText value="#{OrganisationOc.ocSelected.domaineAct}" />
+                
+                <h:outputText value="Date de création :" />
+                <h:outputText value="#{OrganisationOc.ocSelected.dateCrea}" />
+                
+                <h:outputText value="Id propriétaire :" />
+                <h:outputText value="#{OrganisationOc.ocSelected.idProprietaire}" />
+ 
+            </p:panelGrid>
+        </p:outputPanel>
+    </p:dialog>
+	
+	</h:form>
+</body> 
+</html>
